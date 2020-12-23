@@ -149,15 +149,15 @@ func (wixFile *WixManifest) Load(p string) error {
 func (wixFile *WixManifest) SetGuids(force bool) (bool, error) {
 	updated := false
 	if wixFile.UpgradeCode == "" || force {
-		wixFile.UpgradeCode = uuid.NewV4().String()
+		wixFile.UpgradeCode = uuid.NewV4()
 		updated = true
 	}
 	if wixFile.Files.GUID == "" || force {
-		wixFile.Files.GUID = uuid.NewV4().String()
+		wixFile.Files.GUID = uuid.NewV4()
 		updated = true
 	}
 	if (wixFile.Env.GUID == "" || force) && len(wixFile.Env.Vars) > 0 {
-		wixFile.Env.GUID = uuid.NewV4().String()
+		wixFile.Env.GUID = uuid.NewV4()
 		updated = true
 	}
 	if (wixFile.Shortcuts.GUID == "" || force) && len(wixFile.Shortcuts.Items) > 0 {
@@ -248,9 +248,9 @@ func (wixFile *WixManifest) Normalize() error {
 		return fmt.Errorf("Failed to parse version '%v': %v", wixFile.Version, err)
 	}
 	okVersion := ""
-	okVersion += strconv.FormatInt(v.Major(), 10)
-	okVersion += "." + strconv.FormatInt(v.Minor(), 10)
-	okVersion += "." + strconv.FormatInt(v.Patch(), 10)
+	okVersion += strconv.FormatUint(v.Major(), 10)
+	okVersion += "." + strconv.FormatUint(v.Minor(), 10)
+	okVersion += "." + strconv.FormatUint(v.Patch(), 10)
 	wixFile.VersionOk = okVersion
 
 	// choco fix
